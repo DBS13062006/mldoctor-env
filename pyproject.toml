@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mldoctor_env"
+version = "0.1.0"
+description = "ML Training Run Diagnostician — an OpenEnv environment for training agents that debug failed ML runs."
+readme = "README.md"
+license = { text = "BSD-3-Clause" }
+authors = [
+    { name = "Bubbly", email = "bubbly@example.com" },
+]
+requires-python = ">=3.10"
+dependencies = [
+    "openenv-core",
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "pydantic>=2.0",
+    "numpy>=1.24",
+]
+
+[tool.setuptools.packages.find]
+include = ["mldoctor_env*"]

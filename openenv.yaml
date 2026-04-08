@@ -1,0 +1,63 @@
+name: mldoctor_env
+version: 0.1.0
+description: >
+  ML Training Run Diagnostician — an OpenEnv environment for training and
+  evaluating agents that diagnose failing ML training runs. Agent gathers
+  evidence (loss curves, grad norms, hyperparameters, dataset stats, error
+  logs), forms a hypothesis from a 12-mode failure taxonomy, optionally runs
+  an ablation, and prescribes a minimal config fix. Graded against planted
+  ground truth.
+author: Bubbly + teammate
+license: BSD-3-Clause
+tags:
+  - openenv
+  - ml-debugging
+  - real-world
+  - agentic-rl
+  - diagnosis
+
+action_space:
+  type: discriminated_dict
+  description: >
+    Single MLDoctorAction with `name` and `args` fields. Names: inspect_loss_curve,
+    inspect_grad_norms, inspect_hyperparams, inspect_dataset_stats,
+    inspect_error_log, hypothesize, request_ablation, prescribe, submit.
+
+observation_space:
+  type: structured
+  description: >
+    Includes task_id, task_difficulty, incident_header, last_action_result,
+    inspections_made (list), current_hypothesis (optional), prescribed (bool),
+    submitted (bool), step_count, max_steps.
+
+reward:
+  type: dense
+  range: [-0.5, 1.0]
+  description: >
+    Per-step shaped reward. Maximum sum per episode is 1.0 (perfect diagnosis).
+
+tasks:
+  - id: obvious_failure_diagnosis
+    name: Obvious Failure Diagnosis
+    difficulty: easy
+    max_steps: 10
+    description: >
+      Single dominant failure mode with an obvious signature. The agent must
+      identify the failure category and prescribe the minimal config fix.
+
+  - id: subtle_divergence_diagnosis
+    name: Subtle Divergence Diagnosis
+    difficulty: medium
+    max_steps: 12
+    description: >
+      Slow divergence over many steps. Agent must correlate loss curve shape
+      with grad norms and hyperparams to pick the right cause from several
+      plausible ones.
+
+  - id: adversarial_compound_failure
+    name: Adversarial Compound Failure
+    difficulty: hard
+    max_steps: 15
+    description: >
+      Two co-occurring issues where one masks the other. Agent must identify
+      the dominant root cause AND the masking effect, in correct causal order.

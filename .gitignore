@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+*.egg-info/
+build/
+dist/
+
+server.log
+baseline_run.log
+baseline_logs/
