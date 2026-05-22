@@ -1,16 +1,4 @@
----
-title: MLDoctorEnv
-emoji: 🩺
-colorFrom: blue
-colorTo: indigo
-sdk: docker
-pinned: false
-tags:
-  - openenv
-  - ml-debugging
-  - agentic-rl
-license: bsd-3-clause
----
+
 
 # MLDoctorEnv 🩺 — diagnose failing ML training runs
 
